@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Alita</title>
+</head>
+
+<body>
+
+<script>
+    (function () {
+        var CENTER = { x: 150, y: 150 }, BIG_RADIUS = 150, SMALL_RADIUS = 70
+        var bigCircle = document.createElement('div')
+        var smallCircle = document.createElement('div')
+        document.body.appendChild(bigCircle)
+        document.body.appendChild(smallCircle)
+
+        setCircleClass.apply(bigCircle, [CENTER, BIG_RADIUS, 'linear-gradient(skyblue, darkorange)', true])
+        setCircleClass.apply(smallCircle, [CENTER, SMALL_RADIUS, '#FFF', false])
+
+        function setCircleClass(center, radius, bg, isMove) {
+            this.style.position = 'absolute'
+            this.style.left = center.x - radius + 'px'
+            this.style.top = center.y - radius + 'px'
+            this.style.width = radius * 2 + 'px'
+            this.style.height = radius * 2 + 'px'
+            this.style.borderRadius = '50%'
+            this.style.zIndex = 66666
+            this.style.background = bg
+            isMove && (this.style.transition = 'transform .016s transition')
+        }
+
+
+        console.log(bigCircle)
+    })()
+</script>
+</body>
+
+</html>
