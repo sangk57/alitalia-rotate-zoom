@@ -21,6 +21,23 @@
         setCircleClass.apply(bigCircle, [CENTER, BIG_RADIUS, 'linear-gradient(skyblue, darkorange)', true])
         setCircleClass.apply(smallCircle, [CENTER, SMALL_RADIUS, '#FFF', false])
 
+        bigCircle.addEventListener('mousemove', main)
+        smallCircle.addEventListener('mousemove', function(e) {
+            e.stopPropagation()
+        })
+
+        var circleAngle = 0, mouseAngle, lastMouseAngle = 0
+
+        function main(e) {
+            if(e.buttons === 1) {
+                mouseAngle = calcAngleDegrees((e.clientX - CENTER.x), (CENTER.y - e.clientY))
+                var changeMouseAngle = mouseAngle - lastMouseAngle
+                circleAngle -= changeMouseAngle
+                rotate.call(this, circleAngle)
+                lastMouseAngle = mouseAngle
+            }
+        }
+
         function setCircleClass(center, radius, bg, isMove) {
             this.style.position = 'absolute'
             this.style.left = center.x - radius + 'px'
@@ -33,8 +50,21 @@
             isMove && (this.style.transition = 'transform .016s transition')
         }
 
+        function calcAngleDegrees(x, y) {
+            return Math.atan2(y, x) * 180 / Math.PI
+        }
 
-        console.log(bigCircle)
+        function rotate(deg) {
+            this.style.webkitTransform = 'rotate(' + deg + 'deg)'
+            this.style.mozTransform = 'rotate(' + deg + 'deg)'
+            this.style.msTransform = 'rotate(' + deg + 'deg)'
+            this.style.oTransform = 'rotate(' + deg + 'deg)'
+            this.style.transform = 'rotate(' + deg + 'deg)'
+        }
+
+        
+
+
     })()
 </script>
 </body>
