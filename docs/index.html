@@ -6,34 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Alita</title>
+    <style>
+    .pic {
+        width: 100px;
+        margin: 100px auto;
+        border-radius: 10px;
+    }
+    .pic img {
+        width: 100%;
+        border-radius: 10px;
+    }
+    </style>
 </head>
 
 <body>
 
+    <div class="pic">
+        <img src="https://pic-1257007754.cos.ap-chengdu.myqcloud.com/alita/alita%E5%A3%81%E7%BA%B8.jpg?q-sign-algorithm=sha1&q-ak=AKIDBDmw18YnuMqvl7G0zAu2qNwyoX8bi1qV&q-sign-time=1554046042;1554047842&q-key-time=1554046042;1554047842&q-header-list=&q-url-param-list=&q-signature=3fe05acd639c880eadd71161884058c465b6c140&x-cos-security-token=0ca2d8c7cb1bee8c5c42c8b766c4cfa0735919c610001">
+    </div>
+
 <script>
     (function () {
-        var CENTER = { x: 150, y: 150 }, BIG_RADIUS = 150, SMALL_RADIUS = 70
+        var CENTER = { x: 150, y: 150 }, BIG_RADIUS = 150, SMALL_RADIUS = 70, MAX_CHANGE_ANGLE = 300
+        var circleAngle = 0, mouseAngle, lastMouseAngle
         var bigCircle = document.createElement('div')
         var smallCircle = document.createElement('div')
+        var picDom = document.getElementsByClassName('pic')[0]
         document.body.appendChild(bigCircle)
         document.body.appendChild(smallCircle)
 
         setCircleClass.apply(bigCircle, [CENTER, BIG_RADIUS, 'linear-gradient(skyblue, darkorange)', true])
         setCircleClass.apply(smallCircle, [CENTER, SMALL_RADIUS, '#FFF', false])
 
+        bigCircle.addEventListener('mouseenter', init)
+        bigCircle.addEventListener('mousedown', init)
         bigCircle.addEventListener('mousemove', main)
         smallCircle.addEventListener('mousemove', function(e) {
             e.stopPropagation()
         })
 
-        var circleAngle = 0, mouseAngle, lastMouseAngle = 0
+        function init(e) {
+            lastMouseAngle = calcAngleDegrees((e.clientX - CENTER.x), (CENTER.y - e.clientY))
+        }
 
         function main(e) {
             if(e.buttons === 1) {
                 mouseAngle = calcAngleDegrees((e.clientX - CENTER.x), (CENTER.y - e.clientY))
                 var changeMouseAngle = mouseAngle - lastMouseAngle
+                if(Math.abs(changeMouseAngle) > MAX_CHANGE_ANGLE){
+                    return lastMouseAngle = mouseAngle
+                }
                 circleAngle -= changeMouseAngle
                 rotate.call(this, circleAngle)
+                controlPic.call(picDom, circleAngle)
                 lastMouseAngle = mouseAngle
             }
         }
@@ -47,7 +72,7 @@
             this.style.borderRadius = '50%'
             this.style.zIndex = 66666
             this.style.background = bg
-            isMove && (this.style.transition = 'transform .016s transition')
+            isMove && (this.style.transition = 'transform linear .016s')
         }
 
         function calcAngleDegrees(x, y) {
@@ -62,9 +87,9 @@
             this.style.transform = 'rotate(' + deg + 'deg)'
         }
 
-        
-
-
+        function controlPic(value) {
+            this.style.width = 100 + 1 * value + 'px'
+        }
     })()
 </script>
 </body>
