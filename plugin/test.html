@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>alt</title>
+</head>
+<body>
+    <script src="./alita.js"></script>
+
+    <script>
+        var alita = new Alita({
+            radius: [30, 70],
+            position: 'topLeft', // topLeft、topRight、bottomLeft、bottomRight
+            cb: function(angleVal) {
+                console.log(angleVal)
+            }
+        })
+        
+    </script>
+</body>
+</html>
