@@ -7,14 +7,19 @@
     <title>alt</title>
 </head>
 <body>
+    <div id="point" style="position: absolute">·</div>
+
     <script src="./alita.js"></script>
 
     <script>
         var alita = new Alita({
             radius: [30, 70],
-            position: 'topLeft', // topLeft、topRight、bottomLeft、bottomRight
-            cb: function(angleVal) {
+            position: 'bottomRight', // topLeft、topRight、bottomLeft、bottomRight
+            bgColor: '#EEE',
+            callback: function(angleVal) {
+                
                 console.log(angleVal)
+                document.getElementById('point').style.left = angleVal + 'px'
             }
         })
         
